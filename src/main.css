@@ -1,0 +1,24 @@
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #7ed6c7;
+  --tertiary-color: #f5f7fa;
+  --text-color: #1f2933;
+}
+
+body {
+  margin: 0px;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  margin: 0px;
+}
+
+h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 36px;
+}
