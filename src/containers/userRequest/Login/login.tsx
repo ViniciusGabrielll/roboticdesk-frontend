@@ -1,9 +1,32 @@
 import { useState } from "react";
 import styles from "./login.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  async function checkUser() {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+
+    const response = await fetch("http://localhost:8080/user/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const user = await response.json();
+
+    if (user.teamId) {
+      navigate("/dashboard");
+    } else {
+      navigate("/choose-team");
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,7 +49,9 @@ export default function Login() {
         throw new Error("Erro ao Logar");
       }
 
-      alert("Usuário logado com sucesso!");
+      const result = await response.json();
+      localStorage.setItem("accessToken", result.accessToken);
+      checkUser();
     } catch (error) {
       console.error(error);
       alert("Erro no cadastro");
