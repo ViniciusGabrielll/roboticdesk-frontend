@@ -24,7 +24,7 @@ export default function Login() {
     if (user.teamId) {
       navigate("/dashboard");
     } else {
-      navigate("/choose-team");
+      navigate("/team/choose");
     }
   }
 
