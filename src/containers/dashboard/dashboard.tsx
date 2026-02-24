@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MainDashboard from "./Main/main";
+import MainDashboard from "./Items/items";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -33,13 +33,12 @@ export default function Dashboard() {
 
   return (
     <>
-      <MainDashboard></MainDashboard>
-
       {user && (
         <>
-          <p>Nome: {user.username}</p>
+          <p>Nome: {user.teamName}</p>
         </>
       )}
+      <MainDashboard></MainDashboard>
     </>
   );
 }
