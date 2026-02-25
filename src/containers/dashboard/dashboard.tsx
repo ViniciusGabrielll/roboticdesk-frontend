@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MainDashboard from "./Items/items";
+import Settings from "./Settings/settings";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -39,6 +40,7 @@ export default function Dashboard() {
         </>
       )}
       <MainDashboard></MainDashboard>
+      <Settings/>
     </>
   );
 }
