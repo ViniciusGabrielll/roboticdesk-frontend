@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MainDashboard from "./Items/items";
 import Settings from "./Settings/settings";
+import Members from "./Members/members";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -39,7 +40,8 @@ export default function Dashboard() {
           <p>Nome: {user.teamName}</p>
         </>
       )}
-      <MainDashboard></MainDashboard>
+      <MainDashboard/>
+      <Members/>
       <Settings/>
     </>
   );

@@ -38,7 +38,7 @@ export default function MainDashboard() {
       <button onClick={() => setShowCreateItem(!showCreateItem)}>
         Add item
       </button>
-      <h1>Items: </h1>
+      <h1>Items</h1>
       {items.map((item) => (
         <Item key={item.id} item={item} />
       ))}
