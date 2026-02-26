@@ -35,15 +35,14 @@ export default function MainDashboard() {
 
   return (
     <>
+      <h1>Items</h1>
       <button onClick={() => setShowCreateItem(!showCreateItem)}>
         Add item
       </button>
-      <h1>Items</h1>
+      {showCreateItem && <CreateItem onItemCreated={fetchItems} />}
       {items.map((item) => (
         <Item key={item.id} item={item} />
       ))}
-
-      {showCreateItem && <CreateItem onItemCreated={fetchItems} />}
     </>
   );
 }
