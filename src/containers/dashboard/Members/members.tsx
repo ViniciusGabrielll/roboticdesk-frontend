@@ -4,6 +4,7 @@ import Member from "../../../components/Member/member";
 type MemberType = {
   id: number;
   username: string;
+  positions: { positionName: string }[];
 };
 
 export default function Members() {

@@ -6,6 +6,7 @@ type ItemType = {
   id: number;
   title: string;
   priority: number;
+  positions: { positionName: string }[];
 };
 
 export default function MainDashboard() {
