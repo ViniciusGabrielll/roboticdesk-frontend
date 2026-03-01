@@ -9,7 +9,7 @@ type ItemType = {
   positions: { positionName: string }[];
 };
 
-export default function MainDashboard() {
+export default function Items() {
   const [items, setItems] = useState<ItemType[]>([]);
   const [showCreateItem, setShowCreateItem] = useState(false);
 
