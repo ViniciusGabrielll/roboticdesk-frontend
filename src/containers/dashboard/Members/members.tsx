@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import Member from "../../../components/Member/member";
 
 type MemberType = {
-  id: number;
+  userId: string;
   username: string;
   positions: { positionName: string }[];
+  roles: { name: string }[];
+};
+
+type UserType = {
+  id: string;
+  roles: { name: string }[];
 };
 
 export default function Members() {
-  const [teamId, setTeamId] = useState<string | null>(null);
+  const [teamId, setTeamId] = useState<number | null>(null);
   const [invite, setInvite] = useState<string | null>(null);
   const [members, setMembers] = useState<MemberType[]>([]);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     async function fetchUser() {
@@ -26,6 +33,7 @@ export default function Members() {
 
       const data = await response.json();
       setTeamId(data.teamId);
+      setCurrentUser(data);
     }
 
     fetchUser();
@@ -87,9 +95,10 @@ export default function Members() {
         Gerar convite
       </button>
       {invite && <p>{invite}</p>}
-      {members.map((member) => (
-        <Member key={member.id} member={member} />
-      ))}
+      {currentUser && teamId &&
+        members.map((member) => (
+          <Member key={member.userId} fetchMembers={fetchMembers} member={member} user={currentUser} teamId={teamId}/>
+        ))}
     </div>
   );
 }
