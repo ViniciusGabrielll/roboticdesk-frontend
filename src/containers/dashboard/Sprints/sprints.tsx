@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
-import Sprint from "../../../components/Sprint/sprint";
+import Sprint from "../../../components/SprintMiniature/sprintMiniature";
 import CreateSprint from "../../../components/CreateSprint/createSprint";
+import SprintMiniature from "../../../components/SprintMiniature/sprintMiniature";
 
 type SprintType = {
-  id: number;
+  sprintId: number;
   title: string;
   fromTime: string;
   toTime: string;
+  items: {
+    itemId: number;
+    title: string;
+    priority: number;
+    positions: { positionName: string }[];
+  }[];
 };
 
 export default function Sprints() {
   const [sprints, setSprints] = useState<SprintType[]>([]);
   const [showCreateSprint, setShowCreateSprint] = useState(false);
 
-  async function fetchItems() {
+  async function fetchSprints() {
     try {
       const token = localStorage.getItem("accessToken");
 
@@ -37,16 +44,22 @@ export default function Sprints() {
   }
 
   useEffect(() => {
-    fetchItems();
+    fetchSprints();
   }, []);
   return (
     <div>
       <h1>Sprints</h1>
-      {sprints.map((sprint, index) => (
-        <Sprint key={sprint.id} sprint={sprint} order={index + 1}/>
+      {sprints.map((sprint) => (
+        <SprintMiniature
+          key={sprint.sprintId}
+          sprint={sprint}
+          refreshSprint={fetchSprints}
+        />
       ))}
-      <button onClick={() => setShowCreateSprint(!showCreateSprint)}>Add Sprint</button>
-      {showCreateSprint && <CreateSprint onSprintCreated={fetchItems} />}
+      <button onClick={() => setShowCreateSprint(!showCreateSprint)}>
+        Add Sprint
+      </button>
+      {showCreateSprint && <CreateSprint onSprintCreated={fetchSprints} />}
     </div>
   );
 }

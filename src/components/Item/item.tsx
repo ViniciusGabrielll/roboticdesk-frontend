@@ -1,6 +1,6 @@
 type ItemProps = {
   item: {
-    id: number;
+    itemId: number;
     title: string;
     priority: number;
     positions: { positionName: string }[];
