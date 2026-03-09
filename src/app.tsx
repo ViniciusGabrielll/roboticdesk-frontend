@@ -16,7 +16,7 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/team/choose" element={<ChooseTeam />} />
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={
             <PrivateRoute>
               <Dashboard />

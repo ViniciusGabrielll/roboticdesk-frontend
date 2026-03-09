@@ -22,7 +22,7 @@ export default function Login() {
     const user = await response.json();
 
     if (user.teamId) {
-      navigate("/dashboard");
+      navigate("/dashboard/home");
     } else {
       navigate("/team/choose");
     }

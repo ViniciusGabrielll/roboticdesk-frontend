@@ -47,7 +47,7 @@ export default function Member({ fetchMembers, member, user, teamId }: MemberPro
         ))}
       </ul>
       {isScrumMasterOrAdmin && member.userId !== user.id && (
-        <button onClick={() => kickOutMember(member.userId)}>Kick Out</button>
+        <button onClick={() => kickOutMember(member.userId)}>Expulsar</button>
       )}
     </div>
   );
