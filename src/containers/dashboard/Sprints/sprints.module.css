@@ -1,0 +1,45 @@
+.sprints {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding-top: 100px;
+}
+
+.addSprint {    
+  width: 100px;
+  height: 100px;
+  margin: 20px;  
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  transition: 0.2s;
+  cursor: pointer;
+
+  font-size: 50px;
+}
+
+.addSprint:hover {
+  background-color: var(--tertiary-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 15px 29px 0px;
+}
+
+.containerSprint {
+  display: flex;
+  position: relative;
+}
+
+.startDate {
+  position: absolute;
+  top: -20px;
+}
+.endDate {
+  position: absolute;
+  bottom: -20px;
+  right: 0px;
+}

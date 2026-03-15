@@ -1,6 +1,5 @@
-import { useState } from "react";
-import Sprint from "../Sprint/sprint";
 import styles from "./sprintMiniature.module.css";
+import { Link } from "react-router-dom";
 
 type SprintProps = {
   sprint: {
@@ -23,9 +22,22 @@ export default function SprintMiniature({
   sprint,
   refreshSprint,
 }: SprintProps) {
-  const [showSprint, setShowSprint] = useState(false);
+  function formatDate(date: string) {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+    });
+  }
 
-  async function deleteSprint() {
+  function addOneDay(date: string) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + 1);
+    return d;
+  }
+
+  async function deleteSprint(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       const token = localStorage.getItem("accessToken");
 
@@ -50,22 +62,16 @@ export default function SprintMiniature({
   }
 
   return (
-    <div>
-      <button onClick={() => setShowSprint(!showSprint)}>
-        <p>{sprint.title}</p>
-        <p>De: {sprint.fromTime}</p>
-        <p>Para: {sprint.toTime}</p>
+    <Link
+      to={`/dashboard/sprints/${sprint.sprintId}`}
+      className={styles.sprint}
+    >
+      <h3>{sprint.title}</h3>
+      <p>De: {formatDate(addOneDay(sprint.fromTime).toISOString())}</p>
+      <p>Para: {formatDate(addOneDay(sprint.toTime).toISOString())}</p>
+      <button onClick={deleteSprint} className={styles.deleteBtn}>
+        x
       </button>
-      <button onClick={deleteSprint}>Delete</button>
-      {showSprint && (
-        <button
-          onClick={() => setShowSprint(!showSprint)}
-          className={styles.backBtn}
-        >
-          Voltar
-        </button>
-      )}
-      {showSprint && <Sprint sprint={sprint} refreshSprint={refreshSprint}/>}
-    </div>
+    </Link>
   );
 }

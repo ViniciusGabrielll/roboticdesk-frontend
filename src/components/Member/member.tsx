@@ -1,15 +1,22 @@
+import styles from "./member.module.css";
+
 type MemberProps = {
-  fetchMembers: () => {};
+  fetchMembers: () => void;
   member: {
     userId: string;
     username: string;
-    positions: { positionName: string }[];
+    positions: { positionName: string; color: string }[];
   };
   user: { roles: { name: string }[]; id: string };
   teamId: number;
 };
 
-export default function Member({ fetchMembers, member, user, teamId }: MemberProps) {
+export default function Member({
+  fetchMembers,
+  member,
+  user,
+  teamId,
+}: MemberProps) {
   const isScrumMasterOrAdmin = user.roles?.some(
     (role) => role.name === "scrummaster" || role.name === "admin",
   );
@@ -39,13 +46,20 @@ export default function Member({ fetchMembers, member, user, teamId }: MemberPro
   }
 
   return (
-    <div>
-      <p>{member.username}</p>
+    <div className={styles.container}>
       <ul>
         {member.positions.map((position, index) => (
-          <li key={index}>{position.positionName}</li>
+          <li key={index}>
+            <div
+              className={styles.positionColor}
+              style={{ backgroundColor: position.color }}
+            ></div>
+            <p>{position.positionName}</p>
+          </li>
         ))}
       </ul>
+      <p>|</p>
+      <p>{member.username}</p>
       {isScrumMasterOrAdmin && member.userId !== user.id && (
         <button onClick={() => kickOutMember(member.userId)}>Expulsar</button>
       )}

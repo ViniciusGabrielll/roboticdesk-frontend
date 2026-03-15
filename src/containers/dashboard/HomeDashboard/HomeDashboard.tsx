@@ -27,7 +27,9 @@ export default function HomeDashboard({
 }: DashboardProps) {
   return (
     <div>
-      {user && <h1>Nome: {user.teamName}</h1>}
+      <section>
+        <article>{user && <h1>{user.teamName}</h1>}</article>
+      </section>
       <Sprints sprints={sprints} refreshSprint={refreshSprint} />
     </div>
   );

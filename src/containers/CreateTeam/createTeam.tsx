@@ -28,7 +28,7 @@ export default function CreateTeam() {
 
       setName("");
       
-      navigate("/dashboard");
+      navigate("/dashboard/home");
     } catch (error) {
       console.error(error);
       alert("Erro ao criar time");

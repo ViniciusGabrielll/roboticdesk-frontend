@@ -67,10 +67,12 @@ export default function Settings() {
   }
 
   return (
-    <div>
+    <section>
       <h1>Configurações</h1>
-      <button onClick={leaveTeam}>Sair do Time</button>
-      <button onClick={deleteTeam}>Deletar Time</button>
-    </div>
+      <article>
+        <button onClick={leaveTeam}>Sair do Time</button>
+        <button onClick={deleteTeam}>Deletar Time</button>
+      </article>
+    </section>
   );
 }

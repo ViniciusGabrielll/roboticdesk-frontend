@@ -65,8 +65,9 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
   }
 
   return (
-    <>
+    <section>
       <h1>Items</h1>
+      <article>
       <button onClick={() => setShowCreateItem(!showCreateItem)}>
         Add item
       </button>
@@ -100,6 +101,7 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
           </div>
         );
       })}
-    </>
+      </article>
+    </section>
   );
 }

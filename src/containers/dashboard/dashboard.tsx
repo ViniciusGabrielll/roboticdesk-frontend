@@ -7,6 +7,7 @@ import Sprints from "./Sprints/sprints";
 import { Link, Route, Routes } from "react-router-dom";
 import HomeDashboard from "./HomeDashboard/HomeDashboard";
 import NavBarDashboard from "./NavBarDashboard/navbar";
+import Sprint from "../../components/Sprint/sprint";
 
 type SprintType = {
   sprintId: number;
@@ -18,7 +19,7 @@ type SprintType = {
     title: string;
     priority: number;
     status: string;
-    positions: { positionName: string }[];
+    positions: { positionName: string, color: string }[];
   }[];
 };
 
@@ -76,7 +77,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <>
+    <div>
       <NavBarDashboard />
       <Routes>
         <Route
@@ -97,7 +98,9 @@ export default function Dashboard() {
         <Route path="members" element={<Members />} />
 
         <Route path="settings" element={<Settings />} />
+
+        <Route path="sprints/:sprintId" element={<Sprint sprints={sprints} refreshSprint={fetchSprints}/>} />
       </Routes>
-    </>
+    </div>
   );
 }

@@ -21,7 +21,7 @@ export default function ChooseTeam() {
       return;
     }
 
-    window.location.href = "/dashboard";
+    window.location.href = "/dashboard/home";
   }
 
   return (

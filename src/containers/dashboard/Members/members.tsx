@@ -1,10 +1,11 @@
+import styles from "./members.module.css";
 import { useEffect, useState } from "react";
 import Member from "../../../components/Member/member";
 
 type MemberType = {
   userId: string;
   username: string;
-  positions: { positionName: string }[];
+  positions: { positionName: string, color: string }[];
   roles: { name: string }[];
 };
 
@@ -89,16 +90,27 @@ export default function Members() {
   }, [teamId]);
 
   return (
-    <div>
+    <section>
       <h1>Membros</h1>
-      <button onClick={createInvite} disabled={!teamId}>
-        Gerar convite
-      </button>
-      {invite && <p>{invite}</p>}
-      {currentUser && teamId &&
-        members.map((member) => (
-          <Member key={member.userId} fetchMembers={fetchMembers} member={member} user={currentUser} teamId={teamId}/>
-        ))}
-    </div>
+      <article>
+        <button onClick={createInvite} disabled={!teamId}>
+          Gerar convite
+        </button>
+        <div className={styles.members}>
+          {invite && <p>{invite}</p>}
+          {currentUser &&
+            teamId &&
+            members.map((member) => (
+              <Member
+                key={member.userId}
+                fetchMembers={fetchMembers}
+                member={member}
+                user={currentUser}
+                teamId={teamId}
+              />
+            ))}
+        </div>
+      </article>
+    </section>
   );
 }

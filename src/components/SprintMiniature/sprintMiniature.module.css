@@ -1,6 +1,52 @@
-.backBtn {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1;
+.sprint {
+  width: 250px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: relative;
+  text-decoration: none;
+
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.sprint:hover {
+  background-color: var(--tertiary-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 15px 29px 0px;
+}
+
+.sprint h3 {
+    font-size: 20px;
+}
+
+.sprint p {
+    font-size: 16px;
+}
+
+.deleteBtn {
+  background-color: rgb(255, 111, 111);
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: rgb(229, 99, 99);
 }
