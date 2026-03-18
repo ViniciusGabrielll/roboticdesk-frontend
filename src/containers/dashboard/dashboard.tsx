@@ -8,6 +8,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import HomeDashboard from "./HomeDashboard/HomeDashboard";
 import NavBarDashboard from "./NavBarDashboard/navbar";
 import Sprint from "../../components/Sprint/sprint";
+import Positions from "./Positions/positions";
 
 type SprintType = {
   sprintId: number;
@@ -96,6 +97,8 @@ export default function Dashboard() {
         />
 
         <Route path="members" element={<Members />} />
+
+        <Route path="positions" element={<Positions/>} />
 
         <Route path="settings" element={<Settings />} />
 

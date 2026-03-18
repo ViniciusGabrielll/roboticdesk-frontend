@@ -7,6 +7,7 @@ export default function NavBarDashboard() {
       <Link to="/dashboard/home" className={styles.link}>Home</Link>
       <Link to="/dashboard/items" className={styles.link}>Items</Link>
       <Link to="/dashboard/members" className={styles.link}>Membros</Link>
+      <Link to="/dashboard/positions" className={styles.link}>Cargos</Link>
       <Link to="/dashboard/settings" className={styles.link}>Configurações</Link>
     </nav>
   );

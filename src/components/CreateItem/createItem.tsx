@@ -1,12 +1,78 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import styles from "./createItem.module.css";
 
 type Props = {
   onItemCreated: () => void;
+  backButton: () => void;
 };
 
-export default function CreateItem({ onItemCreated }: Props) {
+type PositionType = {
+  positionId: number;
+  color: string;
+  positionName: string;
+  teamId: number;
+};
+
+type UserType = {
+  id: string;
+  teamId: number;
+};
+
+export default function CreateItem({ onItemCreated, backButton }: Props) {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState<number>(0);
+  const [positions, setPositions] = useState<PositionType[]>([]);
+  const [positionsId, setPositionsId] = useState<number[]>([]);
+  const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
+
+  const [user, setUser] = useState<UserType>();
+
+  useEffect(() => {
+    async function fetchUser() {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      try {
+        const response = await fetch("http://localhost:8080/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          localStorage.removeItem("accessToken");
+          return;
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
+  async function fetchPositions() {
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const response = await fetch(
+        `http://localhost:8080/positions/teams/${user?.teamId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+      setPositions(data);
+    } catch (error) {
+      console.error("Erro ao buscar cargos", error);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -14,6 +80,7 @@ export default function CreateItem({ onItemCreated }: Props) {
     const data = {
       title,
       priority,
+      positionsId: selectedPositions,
     };
 
     try {
@@ -40,26 +107,62 @@ export default function CreateItem({ onItemCreated }: Props) {
     }
   }
 
+  function togglePosition(positionId: number) {
+    setSelectedPositions((prev) =>
+      prev.includes(positionId)
+        ? prev.filter((id) => id !== positionId)
+        : [...prev, positionId],
+    );
+  }
+
+  useEffect(() => {
+    if (!user?.teamId) return;
+    fetchPositions();
+  }, [user]);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create Item</h2>
-      <label htmlFor="title">Título</label>
-      <input
-        type="text"
-        id="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <label htmlFor="priority">Prioridade</label>
-      <input
-        type="number"
-        id="priority"
-        value={priority}
-        onChange={(e) => setPriority(Number(e.target.value))}
-        required
-      />
-      <button>Adicionar</button>
-    </form>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Create Item</h2>
+        <label htmlFor="title">Título</label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <label htmlFor="priority">Prioridade</label>
+        <input
+          type="number"
+          id="priority"
+          value={priority}
+          onChange={(e) => setPriority(Number(e.target.value))}
+          required
+        />
+
+        <div>
+          {positions.map((position) => (
+            <button
+              key={position.positionId}
+              onClick={() => togglePosition(position.positionId)}
+              style={{
+                opacity: selectedPositions.includes(position.positionId)
+                  ? 1
+                  : 0.5,
+              }}
+              type="button"
+            >
+              <div style={{ backgroundColor: position.color }} />
+              <p>{position.positionName}</p>
+            </button>
+          ))}
+        </div>
+        <button type="submit">Adicionar</button>
+        <button className={styles.backBtn} onClick={backButton}>
+          x
+        </button>
+      </form>
+    </div>
   );
 }

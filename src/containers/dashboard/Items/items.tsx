@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CreateItem from "../../../components/CreateItem/createItem";
 
 type ItemType = {
@@ -68,39 +68,41 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
     <section>
       <h1>Items</h1>
       <article>
-      <button onClick={() => setShowCreateItem(!showCreateItem)}>
-        Add item
-      </button>
-      {showCreateItem && <CreateItem onItemCreated={fetchItems} />}
-      {items.map((item) => {
-        const sprintDoItem = sprints.find((sprint) =>
-          sprint.items.some((i) => i.itemId === item.itemId),
-        );
-        return (
-          <div key={item.itemId}>
-            <div>
-              <p>{item.title}</p>
-              <p>{item.priority}</p>
-              <ul>
-                {item.positions.map((position, index) => (
-                  <li key={index}>{position.positionName}</li>
+        <button onClick={() => setShowCreateItem(!showCreateItem)}>
+          Add item
+        </button>
+        {showCreateItem && <CreateItem onItemCreated={fetchItems} backButton={() => setShowCreateItem(false)}/>}
+        {items.map((item) => {
+          const sprintDoItem = sprints.find((sprint) =>
+            sprint.items.some((i) => i.itemId === item.itemId),
+          );
+          return (
+            <div key={item.itemId}>
+              <div>
+                <p>{item.title}</p>
+                <p>{item.priority}</p>
+                <ul>
+                  {item.positions.map((position, index) => (
+                    <li key={index}>{position.positionName}</li>
+                  ))}
+                </ul>
+              </div>
+              <select
+                value={sprintDoItem?.sprintId || ""}
+                onChange={(e) =>
+                  assignItemToSprint(item.itemId, e.target.value)
+                }
+              >
+                <option value="">Sem sprint</option>
+                {sprints.map((sprint) => (
+                  <option key={sprint.sprintId} value={sprint.sprintId}>
+                    {sprint.title}
+                  </option>
                 ))}
-              </ul>
+              </select>
             </div>
-            <select
-              value={sprintDoItem?.sprintId || ""}
-              onChange={(e) => assignItemToSprint(item.itemId, e.target.value)}
-            >
-              <option value="">Sem sprint</option>
-              {sprints.map((sprint) => (
-                <option key={sprint.sprintId} value={sprint.sprintId}>
-                  {sprint.title}
-                </option>
-              ))}
-            </select>
-          </div>
-        );
-      })}
+          );
+        })}
       </article>
     </section>
   );

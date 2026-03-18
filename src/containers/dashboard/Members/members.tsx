@@ -5,7 +5,7 @@ import Member from "../../../components/Member/member";
 type MemberType = {
   userId: string;
   username: string;
-  positions: { positionName: string, color: string }[];
+  positions: { positionId: number; positionName: string; color: string }[];
   roles: { name: string }[];
 };
 
@@ -93,11 +93,7 @@ export default function Members() {
     <section>
       <h1>Membros</h1>
       <article>
-        <button onClick={createInvite} disabled={!teamId}>
-          Gerar convite
-        </button>
         <div className={styles.members}>
-          {invite && <p>{invite}</p>}
           {currentUser &&
             teamId &&
             members.map((member) => (
@@ -110,6 +106,10 @@ export default function Members() {
               />
             ))}
         </div>
+        <button onClick={createInvite} disabled={!teamId}>
+          Gerar convite
+        </button>
+        {invite && <p>{invite}</p>}
       </article>
     </section>
   );
