@@ -1,0 +1,58 @@
+.itemsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.itemContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  position: relative;
+}
+
+.addItem {
+  width: 100%;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.addItem:hover {
+  background-color: var(--tertiary-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 15px 29px 0px;
+}
+
+.deleteBtn {
+  background-color: rgb(255, 111, 111);
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(229, 99, 99);
+}

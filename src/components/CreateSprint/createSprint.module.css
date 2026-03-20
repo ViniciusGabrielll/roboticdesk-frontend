@@ -25,13 +25,34 @@
   box-shadow: rgba(0, 0, 0, 0.462) 0px 7px 29px 0px;
 }
 
+.form label {
+  margin-top: 10px;
+}
+
 .form input {
-    width: 100%;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: var(--tertiary-color);
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--tertiary-color);
+}
+
+.addButton {
+  margin-top: 25px;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--tertiary-color);
+  cursor: pointer;
+  color: var(--text-color);
+  transition: 0.2s;
+}
+
+.addButton:hover {
+  background-color: var(--secondary-color);
 }
 
 .backBtn {

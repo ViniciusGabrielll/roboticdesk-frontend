@@ -60,7 +60,7 @@ export default function Sprint({ sprints, refreshSprint }: SprintProps) {
   }
 
   return (
-    <section className={styles.section}>
+    <section>
       <h1>{sprint.title}</h1>
       <div className={styles.container}>
         <article>

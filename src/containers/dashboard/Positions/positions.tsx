@@ -113,11 +113,6 @@ export default function Positions() {
           },
         },
       );
-      console.log("status:", response.status);
-      console.log("ok:", response.ok);
-
-      const text = await response.text();
-      console.log("response:", text);
 
       if (!response.ok) {
         throw new Error("Erro ao deletar position");
@@ -145,7 +140,7 @@ export default function Positions() {
               <div style={{ backgroundColor: position.color }} />
               <p>{position.positionName}</p>
 
-              <button onClick={(e) => deletePosition(e, position.positionId)}>
+              <button onClick={(e) => deletePosition(e, position.positionId)} className={styles.deleteBtn}>
                 x
               </button>
             </div>

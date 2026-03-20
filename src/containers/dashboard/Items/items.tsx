@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./items.module.css";
 import CreateItem from "../../../components/CreateItem/createItem";
 
 type ItemType = {
@@ -64,45 +65,77 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
     fetchItems();
   }
 
+  async function deleteItem(e: React.MouseEvent, itemId: number) {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const response = await fetch(`http://localhost:8080/items/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao deletar item");
+      }
+
+      fetchItems();
+      refreshSprint();
+    } catch (error) {
+      console.error("Erro ao deletar item", error);
+    }
+  }
+
   return (
     <section>
       <h1>Items</h1>
       <article>
-        <button onClick={() => setShowCreateItem(!showCreateItem)}>
-          Add item
+        <button onClick={() => setShowCreateItem(!showCreateItem)} className={styles.addItem}>
+          +
         </button>
-        {showCreateItem && <CreateItem onItemCreated={fetchItems} backButton={() => setShowCreateItem(false)}/>}
-        {items.map((item) => {
-          const sprintDoItem = sprints.find((sprint) =>
-            sprint.items.some((i) => i.itemId === item.itemId),
-          );
-          return (
-            <div key={item.itemId}>
-              <div>
-                <p>{item.title}</p>
-                <p>{item.priority}</p>
-                <ul>
-                  {item.positions.map((position, index) => (
-                    <li key={index}>{position.positionName}</li>
+        {showCreateItem && (
+          <CreateItem
+            onItemCreated={fetchItems}
+            backButton={() => setShowCreateItem(false)}
+          />
+        )}
+        <div className={styles.itemsContainer}>
+          {items.map((item) => {
+            const sprintDoItem = sprints.find((sprint) =>
+              sprint.items.some((i) => i.itemId === item.itemId),
+            );
+            return (
+              <div key={item.itemId} className={styles.itemContainer}>
+                <div>
+                  <p>{item.title}</p>
+                  <p>{item.priority}</p>
+                  <ul>
+                    {item.positions.map((position, index) => (
+                      <li key={index}>{position.positionName}</li>
+                    ))}
+                  </ul>
+                </div>
+                <select
+                  value={sprintDoItem?.sprintId || ""}
+                  onChange={(e) =>
+                    assignItemToSprint(item.itemId, e.target.value)
+                  }
+                >
+                  <option value="">Sem sprint</option>
+                  {sprints.map((sprint) => (
+                    <option key={sprint.sprintId} value={sprint.sprintId}>
+                      {sprint.title}
+                    </option>
                   ))}
-                </ul>
+                </select>
+                <button className={styles.deleteBtn} onClick={(e) => deleteItem(e, item.itemId)}>x</button>
               </div>
-              <select
-                value={sprintDoItem?.sprintId || ""}
-                onChange={(e) =>
-                  assignItemToSprint(item.itemId, e.target.value)
-                }
-              >
-                <option value="">Sem sprint</option>
-                {sprints.map((sprint) => (
-                  <option key={sprint.sprintId} value={sprint.sprintId}>
-                    {sprint.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </article>
     </section>
   );

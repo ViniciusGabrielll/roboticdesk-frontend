@@ -1,10 +1,12 @@
 import { useState } from "react";
+import styles from "./createSprint.module.css";
 
 type Props = {
   onSprintCreated: () => void;
+  backButton: () => void;
 };
 
-export default function CreateSprint({ onSprintCreated }: Props) {
+export default function CreateSprint({ onSprintCreated, backButton }: Props) {
   const [title, setTitle] = useState("");
   const [fromTime, setFromTime] = useState("");
   const [toTime, setToTime] = useState("");
@@ -43,33 +45,39 @@ export default function CreateSprint({ onSprintCreated }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Criar Sprint</h2>
-      <label htmlFor="fromTime">Objetivo da Sprint: </label>
-      <input
-        type="text"
-        id="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <label htmlFor="fromTime">Data de início: </label>
-      <input
-        type="date"
-        id="fromTime"
-        value={fromTime}
-        onChange={(e) => setFromTime(e.target.value)}
-        required
-      />
-      <label htmlFor="fromTime">Data de finalização: </label>
-      <input
-        type="date"
-        id="toTime"
-        value={toTime}
-        onChange={(e) => setToTime(e.target.value)}
-        required
-      />
-      <button>Adicionar</button>
-    </form>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Criar Sprint</h2>
+        <label htmlFor="fromTime">Objetivo da Sprint: </label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <label htmlFor="fromTime">Data de início: </label>
+        <input
+          type="date"
+          id="fromTime"
+          value={fromTime}
+          onChange={(e) => setFromTime(e.target.value)}
+          required
+        />
+        <label htmlFor="fromTime">Data de finalização: </label>
+        <input
+          type="date"
+          id="toTime"
+          value={toTime}
+          onChange={(e) => setToTime(e.target.value)}
+          required
+        />
+        <button type="submit" className={styles.addButton}>Adicionar</button>
+
+        <button className={styles.backBtn} onClick={backButton} type="button">
+          x
+        </button>
+      </form>
+    </div>
   );
 }
