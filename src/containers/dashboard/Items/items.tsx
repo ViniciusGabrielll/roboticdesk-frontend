@@ -5,9 +5,9 @@ import CreateItem from "../../../components/CreateItem/createItem";
 type ItemType = {
   itemId: number;
   title: string;
-  priority: number;
+  priority: string;
   status: string;
-  positions: { positionName: string }[];
+  positions: { positionId: number; positionName: string; color: string }[];
 };
 
 type SprintProps = {
@@ -19,9 +19,9 @@ type SprintProps = {
     items: {
       itemId: number;
       title: string;
-      priority: number;
+      priority: string;
       status: string;
-      positions: { positionName: string }[];
+      positions: { positionId: number; positionName: string; color: string }[];
     }[];
   }[];
   refreshSprint: () => void;
@@ -30,6 +30,9 @@ type SprintProps = {
 export default function Items({ sprints, refreshSprint }: SprintProps) {
   const [items, setItems] = useState<ItemType[]>([]);
   const [showCreateItem, setShowCreateItem] = useState(false);
+  const criticalItems = items.filter((item) => item.priority === "CRITICAL");
+  const importantItems = items.filter((item) => item.priority === "IMPORTANT");
+  const optionalItems = items.filter((item) => item.priority === "OPTIONAL");
 
   async function fetchItems() {
     try {
@@ -89,11 +92,60 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
     }
   }
 
+  function renderItems(list: ItemType[]) {
+    return list.map((item) => {
+      const sprintDoItem = sprints.find((sprint) =>
+        sprint.items.some((i) => i.itemId === item.itemId),
+      );
+
+      return (
+        <div key={item.itemId} className={styles.itemContainer}>
+          <ul className={styles.positionsContainer}>
+            {item.positions.map((position, index) => (
+              <li key={index} className={styles.positionContainer}>
+                <div
+                  className={styles.positionColor}
+                  style={{ backgroundColor: position.color }}
+                ></div>
+                <p>{position.positionName}</p>
+              </li>
+            ))}
+          </ul>
+          <p>|</p>
+          <p>{item.title}</p>
+
+          <select
+            value={sprintDoItem?.sprintId || ""}
+            onChange={(e) => assignItemToSprint(item.itemId, e.target.value)}
+            className={styles.optionSprint}
+          >
+            <option value=""></option>
+            {sprints.map((sprint) => (
+              <option key={sprint.sprintId} value={sprint.sprintId}>
+                {sprint.title}
+              </option>
+            ))}
+          </select>
+
+          <button
+            className={styles.deleteBtn}
+            onClick={(e) => deleteItem(e, item.itemId)}
+          >
+            x
+          </button>
+        </div>
+      );
+    });
+  }
+
   return (
     <section>
       <h1>Items</h1>
       <article>
-        <button onClick={() => setShowCreateItem(!showCreateItem)} className={styles.addItem}>
+        <button
+          onClick={() => setShowCreateItem(!showCreateItem)}
+          className={styles.addItem}
+        >
           +
         </button>
         {showCreateItem && (
@@ -103,38 +155,32 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
           />
         )}
         <div className={styles.itemsContainer}>
-          {items.map((item) => {
-            const sprintDoItem = sprints.find((sprint) =>
-              sprint.items.some((i) => i.itemId === item.itemId),
-            );
-            return (
-              <div key={item.itemId} className={styles.itemContainer}>
-                <div>
-                  <p>{item.title}</p>
-                  <p>{item.priority}</p>
-                  <ul>
-                    {item.positions.map((position, index) => (
-                      <li key={index}>{position.positionName}</li>
-                    ))}
-                  </ul>
-                </div>
-                <select
-                  value={sprintDoItem?.sprintId || ""}
-                  onChange={(e) =>
-                    assignItemToSprint(item.itemId, e.target.value)
-                  }
-                >
-                  <option value="">Sem sprint</option>
-                  {sprints.map((sprint) => (
-                    <option key={sprint.sprintId} value={sprint.sprintId}>
-                      {sprint.title}
-                    </option>
-                  ))}
-                </select>
-                <button className={styles.deleteBtn} onClick={(e) => deleteItem(e, item.itemId)}>x</button>
+          {criticalItems.length > 0 && (
+            <div className={styles.critical}>
+              <h2>Críticos</h2>
+              <div className={styles.itemsSection}>
+                {renderItems(criticalItems)}
               </div>
-            );
-          })}
+            </div>
+          )}
+
+          {importantItems.length > 0 && (
+            <div className={styles.important}>
+              <h2>Importantes</h2>
+              <div className={styles.itemsSection}>
+                {renderItems(importantItems)}
+              </div>
+            </div>
+          )}
+
+          {optionalItems.length > 0 && (
+            <div className={styles.optional}>
+              <h2>Opcionais</h2>
+              <div className={styles.itemsSection}>
+                {renderItems(optionalItems)}
+              </div>
+            </div>
+          )}
         </div>
       </article>
     </section>

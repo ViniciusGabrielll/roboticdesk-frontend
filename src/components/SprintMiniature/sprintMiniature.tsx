@@ -10,7 +10,7 @@ type SprintProps = {
     items: {
       itemId: number;
       title: string;
-      priority: number;
+      priority: string;
       status: string;
       positions: { positionName: string }[];
     }[];

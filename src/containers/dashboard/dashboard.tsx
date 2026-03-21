@@ -18,9 +18,9 @@ type SprintType = {
   items: {
     itemId: number;
     title: string;
-    priority: number;
+    priority: string;
     status: string;
-    positions: { positionName: string, color: string }[];
+    positions: { positionId: number; positionName: string; color: string }[];
   }[];
 };
 
@@ -98,11 +98,14 @@ export default function Dashboard() {
 
         <Route path="members" element={<Members />} />
 
-        <Route path="positions" element={<Positions/>} />
+        <Route path="positions" element={<Positions />} />
 
         <Route path="settings" element={<Settings />} />
 
-        <Route path="sprints/:sprintId" element={<Sprint sprints={sprints} refreshSprint={fetchSprints}/>} />
+        <Route
+          path="sprints/:sprintId"
+          element={<Sprint sprints={sprints} refreshSprint={fetchSprints} />}
+        />
       </Routes>
     </div>
   );

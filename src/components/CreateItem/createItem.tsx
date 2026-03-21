@@ -20,7 +20,7 @@ type UserType = {
 
 export default function CreateItem({ onItemCreated, backButton }: Props) {
   const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState<number>(0);
+  const [priority, setPriority] = useState("");
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [positionsId, setPositionsId] = useState<number[]>([]);
   const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
@@ -98,7 +98,7 @@ export default function CreateItem({ onItemCreated, backButton }: Props) {
       }
 
       setTitle("");
-      setPriority(0);
+      setPriority("");
 
       onItemCreated();
     } catch (error) {
@@ -133,13 +133,17 @@ export default function CreateItem({ onItemCreated, backButton }: Props) {
           required
         />
         <label htmlFor="priority">Prioridade</label>
-        <input
-          type="number"
+        <select
           id="priority"
           value={priority}
-          onChange={(e) => setPriority(Number(e.target.value))}
+          onChange={(e) => setPriority(e.target.value)}
           required
-        />
+        >
+          <option value="">Selecione</option>
+          <option value="CRITICAL">Crítico</option>
+          <option value="IMPORTANT">Importante</option>
+          <option value="OPTIONAL">Opicional</option>
+        </select>
 
         <div>
           {positions.map((position) => (
