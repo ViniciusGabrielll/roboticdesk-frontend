@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./positions.module.css";
+import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
 type PositionType = {
   positionId: number;
@@ -132,6 +133,9 @@ export default function Positions() {
   return (
     <section>
       <h1>Cargos</h1>
+      <div className={styles.backgroundContainer}>
+        <BackgroundEffect className={styles.background} />
+      </div>
       <article className={styles.positionsContainer}>
         {currentUser &&
           teamId &&
@@ -140,7 +144,10 @@ export default function Positions() {
               <div style={{ backgroundColor: position.color }} />
               <p>{position.positionName}</p>
 
-              <button onClick={(e) => deletePosition(e, position.positionId)} className={styles.deleteBtn}>
+              <button
+                onClick={(e) => deletePosition(e, position.positionId)}
+                className={styles.deleteBtn}
+              >
                 x
               </button>
             </div>

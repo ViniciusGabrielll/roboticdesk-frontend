@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./items.module.css";
 import CreateItem from "../../../components/CreateItem/createItem";
+import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
 type ItemType = {
   itemId: number;
@@ -139,8 +140,11 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
   }
 
   return (
-    <section>
-      <h1>Items</h1>
+    <section className={styles.container}>
+      <h1>Tarefas</h1>
+      <div className={styles.backgroundContainer}>
+        <BackgroundEffect className={styles.background} />
+      </div>
       <article>
         <button
           onClick={() => setShowCreateItem(!showCreateItem)}

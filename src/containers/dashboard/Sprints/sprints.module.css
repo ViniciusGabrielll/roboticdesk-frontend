@@ -1,26 +1,29 @@
 .sprints {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    padding-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 50px;
 }
 
-.addSprint {    
-  width: 100px;
-  height: 100px;
-  margin: 20px;  
-  border-radius: 50%;
+.addSprint {
+  width: 100%;
+  height: 150px;
+  padding: 20px;
+  border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
   border: none;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: relative;
+  text-decoration: none;
 
   transition: 0.2s;
   cursor: pointer;
-
   font-size: 50px;
 }
 

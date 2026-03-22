@@ -5,7 +5,7 @@ import Settings from "./Settings/settings";
 import Members from "./Members/members";
 import Sprints from "./Sprints/sprints";
 import { Link, Route, Routes } from "react-router-dom";
-import HomeDashboard from "./HomeDashboard/HomeDashboard";
+import HomeDashboard from "./HomeDashboard/homeDashboard";
 import NavBarDashboard from "./NavBarDashboard/navbar";
 import Sprint from "../../components/Sprint/sprint";
 import Positions from "./Positions/positions";
@@ -79,7 +79,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <NavBarDashboard />
+      <NavBarDashboard user={user}/>
       <Routes>
         <Route
           path="home"

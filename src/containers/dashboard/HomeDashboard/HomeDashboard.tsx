@@ -1,4 +1,6 @@
+import styles from "./homeDashboard.module.css";
 import Sprints from "../Sprints/sprints";
+import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
 type DashboardProps = {
   sprints: {
@@ -26,9 +28,13 @@ export default function HomeDashboard({
   user,
 }: DashboardProps) {
   return (
-    <div>
-      <section>
-        <article>{user && <h1>{user.teamName}</h1>}</article>
+    <div className={styles.container}>
+      <div className={styles.backgroundContainer}>
+        <BackgroundEffect className={styles.background} />
+      </div>
+      <section className={styles.teamContainer}>
+        {user && <h1 className={styles.teamTitle}>{user.teamName}</h1>}
+        <article></article>
       </section>
       <Sprints sprints={sprints} refreshSprint={refreshSprint} />
     </div>

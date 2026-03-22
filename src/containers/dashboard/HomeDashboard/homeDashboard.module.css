@@ -1,14 +1,23 @@
-.members {
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+.teamContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+}
+
+.teamTitle {
+  font-size: 60px;
 }
 
 .backgroundContainer {
   position: fixed;
+  right: 0;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  width: 90%;
   height: 90vh;
   overflow: hidden;
   z-index: 0;
@@ -16,8 +25,8 @@
 .background {
   display: block;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 80%,
+    135deg,
+    rgba(255, 255, 255, 0) 70%,
     rgba(126, 214, 199, 1) 100%
   );
 }

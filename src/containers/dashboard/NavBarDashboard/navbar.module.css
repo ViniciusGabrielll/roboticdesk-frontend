@@ -1,18 +1,52 @@
 .container {
-    width: 100%;
-    height: 50px;
-    background-color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    padding: 0px 10% 0px 10%;
-    gap: 20px;
-    z-index: 2;
-    position: fixed;
+  width: 100%;
+  height: 55px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10% 0px 10%;
+  z-index: 2;
+  position: fixed;
+}
+
+.links {
+  display: flex;
+  height: 55px;
 }
 
 .link {
-    color: var(--tertiary-color);
-    text-decoration: none;
-    font-size: 26px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  color: var(--tertiary-color);
+  text-decoration: none;
+  font-size: 26px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.link:hover {
+    background-color: #3170d4;
+}
+
+.userContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userName {
+    font-size: 16px;
+    color: white;
     font-weight: bold;
+}
+
+.userEmail {
+    color: white;
+    font-size: 12px;
+}
+
+.logo {
+  width: 40px;
 }

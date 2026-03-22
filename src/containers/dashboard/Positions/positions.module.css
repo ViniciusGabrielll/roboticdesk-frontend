@@ -116,3 +116,21 @@
 .deleteBtn:hover {
   background-color: rgb(229, 99, 99);
 }
+
+.backgroundContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+.background {
+  display: block;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(126, 214, 199, 1) 100%
+  );
+}

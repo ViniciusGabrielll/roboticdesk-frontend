@@ -1,6 +1,7 @@
 import styles from "./members.module.css";
 import { useEffect, useState } from "react";
 import Member from "../../../components/Member/member";
+import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
 type MemberType = {
   userId: string;
@@ -92,6 +93,9 @@ export default function Members() {
   return (
     <section>
       <h1>Membros</h1>
+      <div className={styles.backgroundContainer}>
+        <BackgroundEffect className={styles.background} />
+      </div>
       <article>
         <div className={styles.members}>
           {currentUser &&

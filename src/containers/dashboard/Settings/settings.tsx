@@ -1,5 +1,7 @@
+import styles from "./settings.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -69,6 +71,9 @@ export default function Settings() {
   return (
     <section>
       <h1>Configurações</h1>
+      <div className={styles.backgroundContainer}>
+        <BackgroundEffect className={styles.background} />
+      </div>
       <article>
         <button onClick={leaveTeam}>Sair do Time</button>
         <button onClick={deleteTeam}>Deletar Time</button>

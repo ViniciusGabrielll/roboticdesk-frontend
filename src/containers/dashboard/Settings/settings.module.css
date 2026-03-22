@@ -1,23 +1,17 @@
-.members {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .backgroundContainer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   overflow: hidden;
   z-index: 0;
 }
 .background {
   display: block;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 80%,
+    315deg,
+    rgba(255, 255, 255, 0) 70%,
     rgba(126, 214, 199, 1) 100%
   );
 }
