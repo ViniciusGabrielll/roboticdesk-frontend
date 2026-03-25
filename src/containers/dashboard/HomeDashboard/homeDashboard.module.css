@@ -22,12 +22,12 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: relative;
 }
 
 .graphicContainer {
   width: 100%;
-  min-height: 200px;
-  max-height: 300px;
+  min-height: 250px;
   background-color: var(--tertiary-color);
   padding: 20px;
   border-radius: 10px;
@@ -77,6 +77,16 @@
 .tasksCompleted {
   display: flex;
   align-items: center;
+}
+
+.sprintCompletedsContainer {
+  display: flex;
+  align-items: center;  
+  margin-top: 15px;
+  gap: 20px;
+}
+.sprintCompletedsContainer img {
+  width: 80px;
 }
 
 .backgroundContainer {

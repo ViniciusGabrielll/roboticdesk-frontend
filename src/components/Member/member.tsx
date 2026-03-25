@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./member.module.css";
+import ChangePosition from "../ChangePosition/changePosition";
 
 type MemberProps = {
   fetchMembers: () => void;
@@ -27,8 +28,7 @@ export default function Member({
   const isScrumMasterOrAdmin = user.roles?.some(
     (role) => role.name === "scrummaster" || role.name === "admin",
   );
-  const [showAtributePostition, setShowAtributePosition] = useState(false);
-  const [showRemovePostition, setShowRemovePosition] = useState(false);
+  const [showChangePosition, setShowChangePosition] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
 
   async function kickOutMember(memberId: string) {
@@ -99,7 +99,7 @@ export default function Member({
     }
   }
 
-    async function RemoveUserPosition(memberId: string, positionId: number) {
+  async function RemoveUserPosition(memberId: string, positionId: number) {
     try {
       const token = localStorage.getItem("accessToken");
 
@@ -123,122 +123,61 @@ export default function Member({
     }
   }
 
-
   useEffect(() => {
     if (!teamId) return;
     fetchPositions();
   }, [teamId]);
 
   return (
-    <div className={styles.container}>
-      <ul>
-        {member.positions.map((position, index) => (
-          <li key={index} className={styles.positionMemberContainer}>
-            <div
-              className={styles.positionColor}
-              style={{ backgroundColor: position.color }}
-            ></div>
-            <p>{position.positionName}</p>
-          </li>
-        ))}
-      </ul>
-      <p>|</p>
-      <p>{member.username}</p>
-      <div className={styles.scrumPermissions}>
-        {isScrumMasterOrAdmin && (
-          <div>
-            <button
-              onClick={() => {
-                setShowAtributePosition(!showAtributePostition);
-              }}
-            >
-              Adcionar Cargo
-            </button>
-            <button
-              onClick={() => {
-                setShowRemovePosition(!showRemovePostition);
-              }}
-            >
-              Remover Cargo
-            </button>
-          </div>
-        )}
-        {isScrumMasterOrAdmin && member.userId !== user.id && (
-          <button onClick={() => kickOutMember(member.userId)}>Expulsar</button>
-        )}
-        {showAtributePostition && (
-          <div className={styles.atributePositionContainer}>
-            <div className={styles.squareAtributePosition}>
-              <h3><span style={{color: "var(--secondary-color)"}}>Adcionar</span> cargo á</h3>
-              <h2>{member.username}</h2>
-              <div className={styles.positionsContainer}>
-                {positions
-                  .filter(
-                    (position) =>
-                      !member.positions.some(
-                        (memberPosition) =>
-                          memberPosition.positionName === position.positionName,
-                      ),
-                  )
-                  .map((position) => (
-                    <button
-                      key={position.positionId}
-                      className={styles.positionContainer}
-                      onClick={() => {
-                        AtributeUserPosition(
-                          member.userId,
-                          position.positionId,
-                        );
-                      }}
-                    >
-                      <div style={{ backgroundColor: position.color }} />
-                      <p>{position.positionName}</p>
-                    </button>
-                  ))}
-              </div>
+    <>
+      <div className={styles.container}>
+        <ul>
+          {member.positions.map((position, index) => (
+            <li key={index} className={styles.positionMemberContainer}>
+              <div
+                className={styles.positionColor}
+                style={{ backgroundColor: position.color }}
+              ></div>
+              <p>{position.positionName}</p>
+            </li>
+          ))}
+        </ul>
+        <p>|</p>
+        <p>{member.username}</p>
+        <div className={styles.scrumPermissions}>
+          {isScrumMasterOrAdmin && (
+            <div>
               <button
-                className={styles.backBtn}
                 onClick={() => {
-                  setShowAtributePosition(!showAtributePostition);
+                  setShowChangePosition(!showChangePosition);
                 }}
+                className={styles.scrumButton}
+                style={{ backgroundColor: "var(--secondary-color)" }}
               >
-                x
+                Mudar Cargo
               </button>
             </div>
-          </div>
-        )}
-
-        {showRemovePostition && (
-          <div className={styles.atributePositionContainer}>
-            <div className={styles.squareAtributePosition}>
-              <h3><span style={{color: "red"}}>Remover</span> cargo de</h3>
-              <h2>{member.username}</h2>
-              <div className={styles.positionsContainer}>
-                {member.positions.map((position) => (
-                  <button
-                    key={position.positionId}
-                    className={styles.positionContainer}
-                    onClick={() => {
-                      RemoveUserPosition(member.userId, position.positionId);
-                    }}
-                  >
-                    <div style={{ backgroundColor: position.color }} />
-                    <p>{position.positionName}</p>
-                  </button>
-                ))}
-              </div>
-              <button
-                className={styles.backBtn}
-                onClick={() => {
-                  setShowRemovePosition(!showRemovePostition);
-                }}
-              >
-                x
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+          {isScrumMasterOrAdmin && member.userId !== user.id && (
+            <button
+              onClick={() => kickOutMember(member.userId)}
+              className={styles.scrumButton}
+              style={{ backgroundColor: "rgb(255, 111, 111)" }}
+            >
+              Expulsar
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+
+      {showChangePosition && (
+        <ChangePosition
+          fetchMembers={fetchMembers}
+          member={member}
+          closeTab={() => setShowChangePosition(false)}
+          teamId={teamId}
+        />
+      )}
+    </>
   );
 }

@@ -2,6 +2,7 @@ import styles from "./members.module.css";
 import { useEffect, useState } from "react";
 import Member from "../../../components/Member/member";
 import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
+import copyImg from "../../../assets/images/icons/copy.png";
 
 type MemberType = {
   userId: string;
@@ -20,6 +21,24 @@ export default function Members() {
   const [invite, setInvite] = useState<string | null>(null);
   const [members, setMembers] = useState<MemberType[]>([]);
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const isScrumMasterOrAdmin = currentUser?.roles?.some(
+    (role) => role.name === "scrummaster" || role.name === "admin",
+  );
+
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    if (!invite) return;
+
+    try {
+      await navigator.clipboard.writeText(invite);
+      setCopied(true);
+
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error("Erro ao copiar", error);
+    }
+  }
 
   useEffect(() => {
     async function fetchUser() {
@@ -110,10 +129,41 @@ export default function Members() {
               />
             ))}
         </div>
-        <button onClick={createInvite} disabled={!teamId}>
-          Gerar convite
-        </button>
-        {invite && <p>{invite}</p>}
+        {isScrumMasterOrAdmin && (
+          <div className={styles.conviteBtnContainer}>
+            <button
+              onClick={createInvite}
+              disabled={!teamId}
+              className={styles.conviteBtn}
+            >
+              Gerar convite
+            </button>
+            {!invite && (
+              <p style={{ fontWeight: "normal", fontStyle: "Italic" }}>
+                Código de Convite
+              </p>
+            )}
+            {invite && (
+              <>
+                <button onClick={handleCopy} className={styles.inviteTextBtn}>
+                  <p>
+                    {invite}{" "}
+                    {copied && (
+                      <span
+                        style={{ fontWeight: "normal", fontStyle: "Italic" }}
+                      >
+                        Copiado!
+                      </span>
+                    )}
+                  </p>
+                </button>
+                <button className={styles.copyBtn} onClick={handleCopy}>
+                  <img src={copyImg} alt="Copy" />
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </article>
     </section>
   );

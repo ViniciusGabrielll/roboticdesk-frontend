@@ -1,5 +1,6 @@
 import styles from "./sprintMiniature.module.css";
 import { Link } from "react-router-dom";
+import check from "../../assets/images/icons/check.png";
 
 type SprintProps = {
   sprint: {
@@ -22,6 +23,10 @@ export default function SprintMiniature({
   sprint,
   refreshSprint,
 }: SprintProps) {
+  const isCompleted =
+    sprint.items.length > 0 &&
+    sprint.items.every((item) => item.status === "DONE");
+
   function formatDate(date: string) {
     return new Date(date).toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -64,8 +69,11 @@ export default function SprintMiniature({
   return (
     <Link
       to={`/dashboard/sprints/${sprint.sprintId}`}
-      className={styles.sprint}
+      className={`${styles.sprint} ${isCompleted ? styles.completedSprint : ""}`}
     >
+      {isCompleted && (
+        <img src={check} alt="completed" className={styles.check} />
+      )}
       <h3>{sprint.title}</h3>
       <p>De: {formatDate(addOneDay(sprint.fromTime).toISOString())}</p>
       <p>Para: {formatDate(addOneDay(sprint.toTime).toISOString())}</p>

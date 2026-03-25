@@ -2,6 +2,8 @@ import styles from "./homeDashboard.module.css";
 import Sprints from "../Sprints/sprints";
 import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
 
+import sprintCompleteds from "../../../assets/images/icons/sprintCompleteds.png"
+
 import { PieChart, Pie, Cell } from "recharts";
 import { useEffect, useState } from "react";
 
@@ -50,6 +52,12 @@ export default function HomeDashboard({
     { name: "Concluído", value: completed },
     { name: "Restante", value: total - completed },
   ];
+
+  const completedSprints = sprints.filter(
+    (sprint) =>
+      sprint.items.length > 0 &&
+      sprint.items.every((item) => item.status === "DONE"),
+  ).length;
 
   const positionCount: Record<string, { count: number; color: string }> = {};
 
@@ -144,7 +152,13 @@ export default function HomeDashboard({
             style={{ gridColumn: "1 / 2" }}
             className={styles.graphicContainer}
           >
-            <h2>Listas Pendentes</h2>
+            <h2>Ciclos Concluidos</h2>
+            <div className={styles.sprintCompletedsContainer}>
+              <img src={sprintCompleteds} alt="Completed Sprints" />
+              <h3>
+                {completedSprints} / {sprints.length}
+              </h3>
+            </div>
           </div>
           <div
             style={{ gridColumn: "2 / 3" }}
@@ -168,7 +182,9 @@ export default function HomeDashboard({
                         style={{ backgroundColor: pos.color }}
                         className={styles.positionColor}
                       />
-                      <p>{pos.name} ({pos.count})</p>
+                      <p>
+                        {pos.name} ({pos.count})
+                      </p>
                     </div>
                   </li>
                 ))}

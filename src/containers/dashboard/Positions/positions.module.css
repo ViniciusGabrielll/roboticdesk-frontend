@@ -1,12 +1,12 @@
 .positionsContainer {
   margin-top: 20px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .positionContainer {
-  min-width: 230px;
+  width: 100%;
   padding: 20px;
   background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -27,8 +27,7 @@
 }
 
 .addPosition {
-  width: 200px;
-  padding: 20px;
+  width: 100%;
   background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 10px;
