@@ -3,6 +3,17 @@
   min-height: 100vh;
 }
 
+.selectTasks {
+  width: 150px;
+  height: 50px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  position: relative;
+  font-size: 16px;
+  border-radius: 50px;
+  padding: 10px;
+}
+
 .itemsContainer {
   display: flex;
   flex-direction: column;
@@ -28,6 +39,20 @@
   align-items: center;
   gap: 20px;
   position: relative;
+}
+
+.completed {
+  background-color: #e6e8ed;
+}
+
+.check {
+  width: 30px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
 }
 
 .itemContainer p {

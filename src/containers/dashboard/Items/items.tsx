@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./items.module.css";
 import CreateItem from "../../../components/CreateItem/createItem";
 import BackgroundEffect from "../../../components/BackgroundEffect/backgroundEffect";
+import check from "../../../assets/images/icons/check.png"
 
 type ItemType = {
   itemId: number;
@@ -31,9 +32,7 @@ type SprintProps = {
 export default function Items({ sprints, refreshSprint }: SprintProps) {
   const [items, setItems] = useState<ItemType[]>([]);
   const [showCreateItem, setShowCreateItem] = useState(false);
-  const criticalItems = items.filter((item) => item.priority === "CRITICAL");
-  const importantItems = items.filter((item) => item.priority === "IMPORTANT");
-  const optionalItems = items.filter((item) => item.priority === "OPTIONAL");
+  const [filter, setFilter] = useState("all");
 
   async function fetchItems() {
     try {
@@ -54,6 +53,30 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
   useEffect(() => {
     fetchItems();
   }, []);
+
+  const filteredItems = items.filter((item) => {
+    if (filter === "completed") {
+      return item.status === "DONE";
+    }
+
+    if (filter === "notCompleted") {
+      return item.status !== "DONE";
+    }
+
+    return true;
+  });
+
+  const criticalItems = filteredItems.filter(
+    (item) => item.priority === "CRITICAL",
+  );
+
+  const importantItems = filteredItems.filter(
+    (item) => item.priority === "IMPORTANT",
+  );
+
+  const optionalItems = filteredItems.filter(
+    (item) => item.priority === "OPTIONAL",
+  );
 
   async function assignItemToSprint(itemId: number, sprintId: string) {
     const token = localStorage.getItem("accessToken");
@@ -98,9 +121,15 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
       const sprintDoItem = sprints.find((sprint) =>
         sprint.items.some((i) => i.itemId === item.itemId),
       );
+      const isCompleted = item.status === "DONE";
 
       return (
-        <div key={item.itemId} className={styles.itemContainer}>
+        <div
+          key={item.itemId}
+          className={`${styles.itemContainer} ${
+            isCompleted ? styles.completed : ""
+          }`}
+        >
           <ul className={styles.positionsContainer}>
             {item.positions.map((position, index) => (
               <li key={index} className={styles.positionContainer}>
@@ -128,6 +157,10 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
             ))}
           </select>
 
+          {isCompleted && (
+            <img src={check} alt="completed" className={styles.check} />
+          )}
+
           <button
             className={styles.deleteBtn}
             onClick={(e) => deleteItem(e, item.itemId)}
@@ -142,6 +175,15 @@ export default function Items({ sprints, refreshSprint }: SprintProps) {
   return (
     <section className={styles.container}>
       <h1>Tarefas</h1>
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className={styles.selectTasks}
+      >
+        <option value="all">Todas</option>
+        <option value="completed">Concluídas</option>
+        <option value="notCompleted">Não concluídas</option>
+      </select>
       <div className={styles.backgroundContainer}>
         <BackgroundEffect className={styles.background} />
       </div>

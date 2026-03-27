@@ -27,6 +27,20 @@ export default function SprintMiniature({
     sprint.items.length > 0 &&
     sprint.items.every((item) => item.status === "DONE");
 
+  function isSprintToday(from: string, to: string) {
+    const today = new Date();
+    const start = new Date(from);
+    const end = new Date(to);
+
+    today.setHours(0, 0, 0, 0);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    return today >= start && today <= end;
+  }
+
+  const isTodaySprint = isSprintToday(sprint.fromTime, sprint.toTime);
+
   function formatDate(date: string) {
     return new Date(date).toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -69,7 +83,10 @@ export default function SprintMiniature({
   return (
     <Link
       to={`/dashboard/sprints/${sprint.sprintId}`}
-      className={`${styles.sprint} ${isCompleted ? styles.completedSprint : ""}`}
+      className={`${styles.sprint}
+        ${isCompleted ? styles.completedSprint : ""}
+        ${isTodaySprint ? styles.todaySprint : ""}
+      `}
     >
       {isCompleted && (
         <img src={check} alt="completed" className={styles.check} />

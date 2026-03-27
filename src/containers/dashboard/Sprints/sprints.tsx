@@ -69,7 +69,12 @@ export default function Sprints({ sprints, refreshSprint }: SprintProps) {
         >
           +
         </button>
-        {showCreateSprint && <CreateSprint onSprintCreated={refreshSprint} backButton={() => setShowCreateSprint(false)}/>}
+        {showCreateSprint && (
+          <CreateSprint
+            onSprintCreated={refreshSprint}
+            backButton={() => setShowCreateSprint(false)}
+          />
+        )}
       </article>
     </section>
   );

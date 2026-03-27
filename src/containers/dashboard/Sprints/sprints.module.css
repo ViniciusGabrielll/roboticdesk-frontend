@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
   padding-top: 50px;
 }
 
@@ -39,10 +39,12 @@
 
 .startDate {
   position: absolute;
-  top: -20px;
+  top: -30px;
+  font-weight: bold;
 }
 .endDate {
   position: absolute;
-  bottom: -20px;
+  bottom: -30px;
   right: 0px;
+  font-weight: bold;
 }
